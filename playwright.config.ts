@@ -31,7 +31,10 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
 
-     /* Установка разрешения 1920x1080 для всех тестов */
+    /* Запись видео прохождения тестов - ВСЕГДА */
+    video: 'on',
+
+    /* Установка разрешения 1920x1080 для всех тестов */
     viewport: { width: 1920, height: 1080 },
   },
 
@@ -39,17 +42,27 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { 
+        ...devices['Desktop Chrome'],
+        /* Дублируем настройку видео для надежности */
+        video: 'on'
+      },
     },
 
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      use: { 
+        ...devices['Desktop Firefox'],
+        video: 'on'
+      },
     },
 
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      use: { 
+        ...devices['Desktop Safari'],
+        video: 'on'
+      },
     },
 
     /* Test against mobile viewports. */
