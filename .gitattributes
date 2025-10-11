@@ -1,11 +1,28 @@
-# Весь проект определять как TypeScript
+# Явно указываем TypeScript для всех .ts файлов
+*.ts linguist-language=TypeScript
+*.tsx linguist-language=TypeScript
+
+# Принудительно для всех текстовых файлов
 * linguist-language=TypeScript
 
-# Исключения
-*.js linguist-language=JavaScript
-*.html linguist-language=HTML
-*.json linguist-language=JSON
+# Явные исключения
 *.md linguist-language=Markdown
-*.webm -linguist-detectable
-*.png -linguist-detectable
-*.jpg -linguist-detectable
+*.json linguist-language=JSON
+*.yml linguist-language=YAML
+*.yaml linguist-language=YAML
+*.html linguist-language=HTML
+*.css linguist-language=CSS
+*.js linguist-language=JavaScript
+
+# Исключить из статистики
+test-results/** linguist-vendored
+playwright-report/** linguist-vendored
+node_modules/** linguist-vendored
+*.webm linguist-vendored
+*.png linguist-vendored
+*.jpg linguist-vendored
+*.jpeg linguist-vendored
+
+# Игнорировать конкретные файлы
+README.md linguist-documentation=true
+package.json linguist-documentation=false
