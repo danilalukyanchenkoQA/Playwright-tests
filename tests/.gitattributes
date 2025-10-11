@@ -1,4 +1,0 @@
-*.html linguist-detectable=false
-*.css linguist-detectable=false
-*.ts linguist-language=TypeScript
-*.js linguist-language=TypeScript
