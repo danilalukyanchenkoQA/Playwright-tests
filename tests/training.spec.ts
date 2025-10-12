@@ -5,6 +5,8 @@ import { test, expect } from '@playwright/test';
   await page.goto('http://uitestingplayground.com/click');
   await page.locator("#badButton").click();
   // <<<<<
+  // Добавляем ожидание перед проверкой
+  await page.waitForTimeout(1000);
   await expect(await page.locator("#badButton").getAttribute("class")).toMatch(/btn-success/);
 });
 
@@ -93,4 +95,3 @@ import { test, expect } from '@playwright/test';
   await expect(cb1).toBeChecked()
   await expect(cb2).not.toBeChecked()
 });
-
