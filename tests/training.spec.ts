@@ -1,39 +1,29 @@
 import { test, expect } from '@playwright/test';
 
-test('Проверка заголовка', async ({ page }) => {
-  await page.goto('http://localhost:3000/login');
-  await expect(page).toHaveTitle(/Grafana/);
+
+test('click test', async ({ page }) => {
+    await page.goto('http://uitestingplayground.com/click');
+    await page.locator("#badButton").click();
+    // <<<<<
+    await expect(await page.locator("#badButton").getAttribute("class")).toMatch(/btn-success/);
+  });
+
+  test('checkbox and radio', async({page}) => {
+  await page.goto('https://jqueryui.com/resources/demos/checkboxradio/default.html');
+  await page.locator("[for=radio-1]").click();
+  await page.locator("[for=checkbox-4]").click();
+  await page.locator("[for=checkbox-nested-3]").click();
+  await page.locator("[for=checkbox-nested-4]").click();
+  // <<<<<   
+  await expect(page.locator("[for=radio-1]")).toHaveClass(/ui-checkboxradio-checked/);
+  await expect(page.locator("[for=checkbox-4]")).toHaveClass(/ui-checkboxradio-checked/);
+  await expect(page.locator("[for=checkbox-nested-3]")).toHaveClass(/ui-checkboxradio-checked/);
+  await expect(page.locator("[for=checkbox-nested-4]")).toHaveClass(/ui-checkboxradio-checked/);
 });
 
-test('Нажатие на кнопку Forgot your password', async ({ page }) => {
-  await page.goto('http://localhost:3000/login');
-  // Click the Forgot your password link.
-  await page.getByRole('link', { name: 'Forgot your password?' }).click();
-  // Expects page to have a button with the name of Send reset email.
-  await expect(page.getByRole('button', { name: 'Send reset email' })).toBeVisible();
-});
-
-test('Вход с невалидным логином и паролем', async ({ page }) => {
-  await page.goto('http://localhost:3000/login');
-  await page.locator('[data-testid="data-testid Username input field"]').fill('Логин');
-  await page.locator('[data-testid="data-testid Password input field"]').fill('Пароль');
-  await page.locator('svg[width="16"][height="16"].css-fmaj2t-Icon').click();
-  // Проверка введенного пароля
-  await page.locator('[data-testid="data-testid Login button"]').click();
-  // Проверка наличия сообщения о невалидном логине или пароле
-  await expect(page.getByText('Invalid username or password')).toBeVisible();
-});
-
-
-
-
-
-
-test.skip('Мой первый тест1', async () => {
-  console.log('Hello, World!')
-});
-
-test.skip('Мой первый тест2', () => {
-  console.log('Hello, World!');
-});
-
+test('Login', async({page}) => {
+  await page.goto('http://uitestingplayground.com/sampleapp');
+  await page.locator('input[placeholder="User Name"]').fill('your_username');
+  await page.locator('input[placeholder="********"]').fill('pwd');
+  await page.locator('button:has-text("Log In")').click();
+  });
