@@ -58,25 +58,7 @@ jobs:
       run: npx playwright install --with-deps
       
     - name: Run Playwright tests
-      run: |
-        # Определяем команду для браузера
-        if [ "${{ github.event.inputs.browser }}" == "all" ]; then
-          BROWSER_CMD=""
-        else
-          BROWSER_CMD="--project=${{ github.event.inputs.browser }}"
-        fi
-        
-        # Определяем команду для типа тестов
-        if [ "${{ github.event.inputs.test-type }}" == "smoke" ]; then
-          TEST_CMD="--grep=@smoke"
-        elif [ "${{ github.event.inputs.test-type }}" == "regression" ]; then
-          TEST_CMD="--grep=@regression"
-        else
-          TEST_CMD=""
-        fi
-        
-        # Запускаем тесты
-        npx playwright test $BROWSER_CMD $TEST_CMD
+      run: npx playwright test
       env:
         ENVIRONMENT: ${{ github.event.inputs.environment }}
       
