@@ -6,8 +6,8 @@ on:
   pull_request:
     branches: [ main ]
   schedule:
-    # Запуск каждый день в 7:00 утра по UTC
-    - cron: '0 7 * * *'
+    # Запуск каждый день в 4:00 утра по UTC что соответствует 7 утрв по МСК
+    - cron: '0 4 * * *'
   # ↓ ДОБАВЛЕНО: Ручной запуск workflow ↓
   workflow_dispatch:
     inputs:
