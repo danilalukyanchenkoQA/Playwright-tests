@@ -21,9 +21,28 @@ test('click test', async ({ page }) => {
   await expect(page.locator("[for=checkbox-nested-4]")).toHaveClass(/ui-checkboxradio-checked/);
 });
 
-test('Login', async({page}) => {
+test('Success Login', async({page}) => {
   await page.goto('http://uitestingplayground.com/sampleapp');
   await page.locator('input[placeholder="User Name"]').fill('your_username');
   await page.locator('input[placeholder="********"]').fill('pwd');
   await page.locator('button:has-text("Log In")').click();
+  await expect(page.locator('#loginstatus')).toHaveText('Welcome, your_username!');
+  });
+
+  test('Bad Login', async({page}) => {
+  await page.goto('http://uitestingplayground.com/sampleapp');
+  await page.locator('input[placeholder="User Name"]').fill('your_username');
+  await page.locator('input[placeholder="********"]').fill('invalid password');
+  await page.locator('button:has-text("Log In")').click();
+  await expect(page.locator('#loginstatus')).toHaveText('Invalid username/password');
+  });
+
+  test('Log out', async({page}) => {
+  await page.goto('http://uitestingplayground.com/sampleapp');
+  await page.locator('input[placeholder="User Name"]').fill('your_username');
+  await page.locator('input[placeholder="********"]').fill('pwd');
+  await page.locator('button:has-text("Log In")').click();
+  await expect(page.locator('#loginstatus')).toHaveText('Welcome, your_username!');
+  await page.locator('button:has-text("Log Out")').click();
+  await expect(page.locator('#loginstatus')).toHaveText('User logged out.');
   });
