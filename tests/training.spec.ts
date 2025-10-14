@@ -1,12 +1,14 @@
 import { test, expect } from '@playwright/test';
+import { PlaygroundPage } from '../pages/playground-page';
 
-
-  test('click test', async ({ page, browserName }) => {
-  // Пропускаем тест только в WebKit
+// ПЕРВЫЙ ТЕСТ С POM
+test('click button with POM', async ({ page, browserName }) => {
   test.skip(browserName === 'webkit', 'This test is flaky in WebKit');
-  await page.goto('http://uitestingplayground.com/click');
-  await page.locator("#badButton").click();
-  await expect(await page.locator("#badButton").getAttribute("class")).toMatch(/btn-success/);
+  
+  const playground = new PlaygroundPage(page);
+  await playground.openClickPage();
+  await playground.clickBadButton();
+  await playground.expectButtonHasSuccessClass();
 });
 
   test('checkbox and radio', async({page}) => {
