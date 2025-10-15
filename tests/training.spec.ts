@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { PlaygroundPage } from '../pages/playground-page';
 import { JQueryUIPage } from '../pages/jquery-ui-page';
+import { CheckboxesPage } from '../pages/checkboxes-page';
 
 // ПЕРВЫЙ ТЕСТ С POM
 test('click button with POM', async ({ page, browserName }) => {
@@ -88,14 +89,18 @@ test('click button with POM', async ({ page, browserName }) => {
 });
 
   test('checkboxes', async ({ page }) => {
-  await page.goto('http://the-internet.herokuapp.com/checkboxes');
+  const checkboxesUI = new CheckboxesPage(page);
+  await checkboxesUI.OpenCheckboxPage();
+  //await page.goto('http://the-internet.herokuapp.com/checkboxes');
+
   const form = page.locator("#checkboxes input")
   const cb1 = form.nth(0);
   const cb2 = form.nth(1);
   // >>>>> Устанавливаю галочку на чекбоксе cb1 и снимаю с чекбокса cb2
   await cb1.check();
   await cb2.uncheck();
-// <<<<< Проверяю установлена ли на них или снята галочка
+  // <<<<< Проверяю установлена ли на них или снята галочка
   await expect(cb1).toBeChecked()
   await expect(cb2).not.toBeChecked()
+  await page.locator("body").screenshot()
 });
