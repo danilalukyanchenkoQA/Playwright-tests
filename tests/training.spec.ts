@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { PlaygroundPage } from '../pages/playground-page';
+import { JQueryUIPage } from '../pages/jquery-ui-page';
 
 // ПЕРВЫЙ ТЕСТ С POM
 test('click button with POM', async ({ page, browserName }) => {
@@ -11,17 +12,19 @@ test('click button with POM', async ({ page, browserName }) => {
   await playground.expectButtonHasSuccessClass();
 });
 
-  test('checkbox and radio', async({page}) => {
-  await page.goto('https://jqueryui.com/resources/demos/checkboxradio/default.html');
-  await page.locator("[for=radio-1]").click();
-  await page.locator("[for=checkbox-4]").click();
-  await page.locator("[for=checkbox-nested-3]").click();
-  await page.locator("[for=checkbox-nested-4]").click();
+ // ТЕСТ С POM
+  test('checkbox and radio with POM', async({page}) => {
+  const jqueryUI = new JQueryUIPage(page);
+  await jqueryUI.openCheckboxRadioPage();
+  await jqueryUI.clickRadioButton1();
+  await jqueryUI.clickCheckbox4();
+  await jqueryUI.clickCheckboxNested3();
+  await jqueryUI.clickCheckboxNested4();
   // <<<<<   
-  await expect(page.locator("[for=radio-1]")).toHaveClass(/ui-checkboxradio-checked/);
-  await expect(page.locator("[for=checkbox-4]")).toHaveClass(/ui-checkboxradio-checked/);
-  await expect(page.locator("[for=checkbox-nested-3]")).toHaveClass(/ui-checkboxradio-checked/);
-  await expect(page.locator("[for=checkbox-nested-4]")).toHaveClass(/ui-checkboxradio-checked/);
+  await jqueryUI.expectRadioButton1Checked();
+  await jqueryUI.expectCheckbox4Checked();
+  await jqueryUI.expectCheckboxNested3Checked();
+  await jqueryUI.expectCheckboxNested4Checked();
 });
 
   test('Success Login', async({page}) => {
